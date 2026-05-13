@@ -6,12 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>OpenGlass 3D AI</title>
     
-    <!-- 1. 💡 vConsole：字节跳动高速 CDN -->
-    <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/vConsole/3.9.1/vconsole.min.js"></script>
-    <script>window.vConsole = new window.VConsole();</script>
+    <!-- 1. 💡 手机端监控神器：必须放在最前面，确保能抓到所有报错 -->
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script>
+      // 初始化 vConsole
+      window.vConsole = new window.VConsole();
+      console.log(">>> [系统] 手机控制台已启动，正在监控代码加载...");
+    </script>
 
-    <!-- 2. 💡 3D 引擎：字节跳动高速镜像 -->
-    <script type="module" src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/model-viewer/2.1.1/model-viewer.min.js"></script>
+    <!-- 2. 3D 渲染引擎 (仅电脑加载) -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
+    <!-- 3. 强力清除旧缓存脚本 -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) { registration.unregister(); }
+        });
+      }
+    </script>
 
     <style id="expo-reset">
       html, body { height: 100%; margin: 0; background-color: #000; overflow: hidden; }
@@ -22,7 +35,12 @@
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <!-- App 渲染入口 -->
     <div id="root"></div>
-  <script src="/openglass-web/_expo/static/js/web/AppEntry-9defc40a838e4283c8263bd06f8b2c71.js" defer></script>
+
+    <!-- ⚠️ 注意：不要手动写 <script src="...AppEntry..."></script> -->
+    <!-- Expo 打包时会自动把它注入到 body 底部 -->
+  <script src="/openglass-web/_expo/static/js/web/AppEntry-64270b4c1a8f8a305fbf1c7aeb6e0f86.js" defer></script>
 </body>
 </html>
